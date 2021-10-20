@@ -1,3 +1,0 @@
-/Users/simonecoli/Desktop/Universita/Secondo_anno/Lab/ALICE_Simulation/build/CMakeFiles/rebuild_cache.dir
-/Users/simonecoli/Desktop/Universita/Secondo_anno/Lab/ALICE_Simulation/build/CMakeFiles/edit_cache.dir
-/Users/simonecoli/Desktop/Universita/Secondo_anno/Lab/ALICE_Simulation/build/CMakeFiles/ALICE_Simulation.dir
