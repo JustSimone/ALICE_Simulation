@@ -8,13 +8,13 @@ It consists on the study of the collisions of heavy particles to achieve tempera
 
 | Particle | Probability |
 | -------- | ----------- |
-| $Pion^{+} (\pi^{+})$| 40% |
-| $Pion^{-} (\pi^{-})$ | 40% |
-| $Kaon^{+} (k^{+})$ | 5% |
-| $Kaon^{-} (k^{-})$ | 5% |
-| $Proton^{+} (P^{+})$ | 4.5% |
-| $Proton^{-} (P^{-})$ | 4.5% |
-| $Kaon^0 (k^0)$ | 1.5% |
+| Pion + (π+)| 40% |
+| Pion - (π-) | 40% |
+| Kaon + (k+) | 5% |
+| Kaon - (k-) | 5% |
+| Proton + (P+)| 4.5% |
+| Proton - (P-) | 4.5% |
+| Kaon 0 (k0) | 1.5% |
 
 <h2> Building </h2>
 <p>To build the code using the main it is recommended to use <a href="https://cmake.org">Cmake</a>. You need to find yourself into the ALICE_Simulation/script folder into your terminal and use the following commands: </p>
