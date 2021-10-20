@@ -17,7 +17,7 @@ It consists on the study of the collisions of heavy particles to achieve tempera
 | Kaon 0 | 1.5% |
 
 <h2> Building </h2>
-<p>To build the code using the main it is recommended to use <a href="https://cmake.org">Cmake</a>. You need to find yourself into the ALICE_Simulation folder into your terminal and use the following commands: </p>
+<p>To build the code using the main it is recommended to use <a href="https://cmake.org">Cmake</a>. You need to find yourself into the ALICE_Simulation/script folder into your terminal and use the following commands: </p>
 
 ~~~
 cmake -S . -B Build
@@ -28,7 +28,7 @@ cmake --build Build
 <p>Otherwise it is also possible to build it using <a href="https://root.cern">ROOT</a>. Here, as before, you need to be into ALICE_Simulation from your terminal, open ROOT and use the following commands: </p>
 
 ~~~
-.L source/ParticleType/ParticleType.cpp+
-.L source/ResonanceType/ResonanceType.cpp+
-.L source/Particle/Particle.cpp+
+.L script/ParticleType/ParticleType.cpp+
+.L script/ResonanceType/ResonanceType.cpp+
+.L script/Particle/Particle.cpp+
 ~~~
