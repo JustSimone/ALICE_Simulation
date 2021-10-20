@@ -5,3 +5,4 @@
 #Remove the root files
 *.so
 *.d
+*pcm
