@@ -25,7 +25,7 @@ cmake --build Build
 ./build/ALICE_Simulation
 ~~~
 
-<p>Otherwise it is also possible to build it using <a href"https://root.cern">ROOT</a>. Here, as before, you need to be into ALICE_Simulation from your terminal, open ROOT and use the following commands: </p>
+<p>Otherwise it is also possible to build it using <a href="https://root.cern">ROOT</a>. Here, as before, you need to be into ALICE_Simulation from your terminal, open ROOT and use the following commands: </p>
 
 ~~~
 .L source/ParticleType/ParticleType.cpp+
