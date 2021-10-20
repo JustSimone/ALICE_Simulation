@@ -2,3 +2,4 @@
 *.DS_Store
 #Remove the build folder from the repo
 /build*
+#Remove the root files
