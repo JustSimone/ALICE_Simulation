@@ -14,7 +14,6 @@ int Particle::FindParticle(std::string PTBF) {
     if(ParticleName == PTBF) { return i; }
     else if (fNParticleType == 0) { return 0; }
   }
-  std::cout << "!! -- This Type of Particle does not Excist -- !!" << '\n';
   return 10;
 }
 
@@ -40,7 +39,7 @@ fPx(Px),
 fPy(Py),
 fPz(Pz),
 fIndex (FindParticle(name))
-{}
+{ if(fIndex == 10) { std::cout << "!! -- This Type of Particle does not Excist -- !!" << '\n'; } }
 
 // Getter Methods
 int Particle::GetIndex() const { return fIndex; }
