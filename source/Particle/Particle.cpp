@@ -1,4 +1,4 @@
-#include "library.h"
+#include "../library.hpp"
 #include <string>
 #include <iostream>
 #include <cmath>
@@ -14,6 +14,7 @@ int Particle::FindParticle(std::string PTBF) {
     if(ParticleName == PTBF) { return i; }
     else if (fNParticleType == 0) { return 0; }
   }
+  std::cout << "!! -- This Type of Particle does not Excist -- !!" << '\n';
   return 10;
 }
 
@@ -43,20 +44,27 @@ fIndex (FindParticle(name))
 
 // Getter Methods
 int Particle::GetIndex() const { return fIndex; }
+
 double Particle::GetPx() const { return fPx; }
+
 double Particle::GetPy() const { return fPy; }
+
 double Particle::GetPz() const { return fPz; }
+
 double Particle::GetMass() const {
   return (fParticleType[fIndex]->GetParticleMass());
 }
+
 double Particle::GetMomentum() const {
   return fPx*fPx + fPy*fPy + fPz*fPz;
 }
+
 double Particle::GetTotalEnergy() const {
   double m = GetMass();
   double p2 = GetMomentum();
   return sqrt(m*m + p2);
 }
+
 double Particle::GetInvMass(Particle& p) const {
   double E1 = GetTotalEnergy();
   double E2 = p.GetTotalEnergy();

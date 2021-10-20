@@ -4,7 +4,7 @@
 
 #include <string>
 #include <vector>
-#include "ParticleType.h"
+#include "../ParticleType/ParticleType.hpp"
 
 enum class PL{Electron, Positron, Proton, Antiproton, PionPlus, PionMinus, Pion0, KaonPlus, KaonMinus, Kaon0};
 

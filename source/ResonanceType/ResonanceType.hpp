@@ -2,7 +2,7 @@
 #define RESONANCETYPE_HPP
 
 #include <string>
-#include "ParticleType.h"
+#include "../ParticleType/ParticleType.hpp"
 
 class ResonanceType: public ParticleType {
 private:

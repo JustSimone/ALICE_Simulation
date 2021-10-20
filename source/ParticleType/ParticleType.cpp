@@ -1,6 +1,6 @@
 #include <iostream>
 #include <string>
-#include "ParticleType.h"
+#include "ParticleType.hpp"
 
 //Class ParticleType
 //----------------------

@@ -1,6 +1,7 @@
 #include <iostream>
+
 #include <string>
-#include "ResonanceType.h"
+#include "ResonanceType.hpp"
 
 //Class ResonanceType
 //----------------------
