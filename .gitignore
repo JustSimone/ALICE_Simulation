@@ -1,4 +1,4 @@
-
+#Remove the .DS_Store files from the repo
 *.DS_Store
-
+#Remove the build folder from the repo
 /build*
