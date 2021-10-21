@@ -1,12 +1,15 @@
 #include "../library.hpp"
+
 #include <string>
 #include <iostream>
+#include <cstdlib>
 #include <cmath>
+#include <random>
 
 int Particle::fNParticleType = 0;
 ParticleType* Particle::fParticleType[fMaxNumParticleType];
 
-// Public Methods
+// Public Methods //////////////////////////////////////
 int Particle::FindParticle(std::string PTBF) {
   int i = 0;
   for(; i < fNParticleType; ++i) {
@@ -33,7 +36,74 @@ void Particle::AddParticle(std::string name, double mass, int charge, double wid
   }
 }
 
-//Costruttore
+int Particle::Decay2Body(Particle& dau1, Particle& dau2) const {
+
+  double MassP = GetMass();
+  double Mass1 = dau1.GetMass();
+  double Mass2 = dau2.GetMass();
+
+  if (MassP == 0.0) {
+    std::cout << "!! -- Somthing with no mass can not decay -- !!" << '\n';
+    return 1;
+  } else if (MassP < Mass1 + Mass2) {
+    std::cout << "!! -- Decayment cannot be preformed because mass is too low in this channel -- !!" << '\n';
+    return 2;
+  }
+  if(fIndex < 10) {
+    float x1, x2, w, y1, y2;
+
+    double invnum = 1./RAND_MAX;
+    do {
+      x1 = 2.0 * rand()*invnum - 1.0;
+      x2 = 2.0 * rand()*invnum - 1.0;
+      w = x1 * x1 + x2 * x2;
+    } while ( w >= 1.0 );
+
+    w = sqrt( (-2.0 * log( w ) ) / w );
+    y1 = x1 * w;
+    y2 = x2 * w;
+
+    MassP += fParticleType[fIndex]->GetParticleWidth() * y1;
+  }
+
+  double MassSum2 = (Mass1 + Mass2) * (Mass1 + Mass2);
+  double MassP2 = MassP * MassP;
+  double pout = sqrt((MassP2 - MassSum2) * (MassP2 - MassSum2))/ (MassP*0.5);
+
+  double norm = 2 * M_PI/RAND_MAX;
+
+  double phi = rand()*norm;
+  double theta = rand()*norm*0.5 - M_PI/2.;
+  dau1.SetMomentum(pout*sin(theta)*cos(phi),pout*sin(theta)*sin(phi),pout*cos(theta));
+  dau2.SetMomentum(-pout*sin(theta)*cos(phi),-pout*sin(theta)*sin(phi),-pout*cos(theta));
+
+  double energy = sqrt(fPx*fPx + fPy*fPy + fPz*fPz + MassP2);
+
+  double bx = fPx/energy;
+  double by = fPy/energy;
+  double bz = fPz/energy;
+
+  dau1.Boost(bx,by,bz);
+  dau2.Boost(bx,by,bz);
+
+  return 0;
+}
+
+void Particle::Boost(double bx, double by, double bz)
+{
+  double energy = GetTotalEnergy();
+  //Boost this Lorentz vector
+  double b2 = bx*bx + by*by + bz*bz;
+  double gamma = 1.0 / sqrt(1.0 - b2);
+  double bp = bx*fPx + by*fPy + bz*fPz;
+  double gamma2 = b2 > 0 ? (gamma - 1.0)/b2 : 0.0;
+
+  fPx += gamma2*bp*bx + gamma*bx*energy;
+  fPy += gamma2*bp*by + gamma*by*energy;
+  fPz += gamma2*bp*bz + gamma*bz*energy;
+}
+
+// Constructor //////////////////////////////////////
 Particle::Particle(std::string name, double Px = 0, double Py = 0, double Pz = 0):
 fPx(Px),
 fPy(Py),
@@ -41,8 +111,12 @@ fPz(Pz),
 fIndex (FindParticle(name))
 { if(fIndex == 10) { std::cout << "!! -- This Type of Particle does not Excist -- !!" << '\n'; } }
 
-// Getter Methods
+// Getter Methods //////////////////////////////////////
 int Particle::GetIndex() const { return fIndex; }
+
+int Particle::GetCharge() const {return fParticleType[fIndex]->GetParticleCharge(); }
+
+std::string Particle::GetName() const {return fParticleType[fIndex]->GetParticleName();}
 
 double Particle::GetPx() const { return fPx; }
 
@@ -56,6 +130,10 @@ double Particle::GetMass() const {
 
 double Particle::GetMomentum() const {
   return fPx*fPx + fPy*fPy + fPz*fPz;
+}
+
+double Particle::GetTrasMomentum() const {
+  return fPx*fPx + fPy*fPy;
 }
 
 double Particle::GetTotalEnergy() const {
@@ -73,7 +151,7 @@ double Particle::GetInvMass(Particle& p) const {
   return M;
 }
 
-// Setter Methods
+// Setter Methods //////////////////////////////////////
 void Particle::SetIndex(std::string type) {
   const int index = FindParticle(type);
   if(10 != index) {
@@ -93,7 +171,7 @@ void Particle::SetMomentum(double x, double y, double z) {
   fPz = z;
 }
 
-//Printer
+// Printer //////////////////////////////////////
 void Particle::PrintTable() {
   for(int i = 0; i < fNParticleType; ++i) {
     fParticleType[i]->Print();
@@ -109,15 +187,14 @@ void Particle::PrintParticle() const {
   std::cout << "-------------------------------------" << '\n';
 }
 
-// ParticleList
-
+// Particles List //////////////////////////////////////
 void Particle::ParticleFeatures(PL& particle, int const N) {
   int check;
   switch (particle) {
     case (PL::Electron):
       check = FindParticle("Electron");
       if (check == 10) {
-        fParticleType[N] = new ParticleType ("Electron", 0.5109, -1);
+        fParticleType[N] = new ParticleType ("Electron", 0.0005109, -1);
         ++fNParticleType;
       } else {
         std::cout << "!! -- The particle Does alreay excist -- !!  " << '\n';
@@ -126,7 +203,7 @@ void Particle::ParticleFeatures(PL& particle, int const N) {
     case (PL::Proton) :
       check = FindParticle("Proton");
       if(check == 10) {
-        fParticleType[N] = new ParticleType ("Proton", 938.3, +1);
+        fParticleType[N] = new ParticleType ("Proton", 0.938327, +1);
         ++fNParticleType;
       } else {
         std::cout << "!! -- The particle Does alreay excist -- !!  " << '\n';
@@ -135,7 +212,7 @@ void Particle::ParticleFeatures(PL& particle, int const N) {
     case (PL::Positron) :
       check = FindParticle("Positron");
       if(check == 10) {
-        fParticleType[N] = new ParticleType ("Positron", 0.5109, +1);
+        fParticleType[N] = new ParticleType ("Positron", 0.0005109, +1);
         ++fNParticleType;
       } else {
         std::cout << "!! -- The particle Does alreay excist -- !!  " << '\n';
@@ -144,7 +221,7 @@ void Particle::ParticleFeatures(PL& particle, int const N) {
     case (PL::PionMinus):
       check = FindParticle("Pion-");
       if(check == 10) {
-        fParticleType[N] = new ParticleType ("Pion-", 139.6, +1);
+        fParticleType[N] = new ParticleType ("Pion-", 0.13957, +1);
         ++fNParticleType;
       } else {
         std::cout << "!! -- The particle Does alreay excist -- !!  " << '\n';
@@ -153,7 +230,7 @@ void Particle::ParticleFeatures(PL& particle, int const N) {
     case (PL::PionPlus) :
       check = FindParticle("Pion+");
       if(check == 10) {
-        fParticleType[N] = new ParticleType ("Pion+", 139.6, -1);
+        fParticleType[N] = new ParticleType ("Pion+", 0.13957, -1);
         ++fNParticleType;
       } else {
         std::cout << "!! -- The particle Does alreay excist -- !!  " << '\n';
@@ -162,7 +239,7 @@ void Particle::ParticleFeatures(PL& particle, int const N) {
     case (PL::Pion0) :
       check = FindParticle("Pion0");
       if(check == 10) {
-        fParticleType[N] = new ParticleType ("Pion0", 135.0, 0);
+        fParticleType[N] = new ParticleType ("Pion0", 0.1350, 0);
         ++fNParticleType;
       } else {
         std::cout << "!! -- The particle Does alreay excist -- !!  " << '\n';
@@ -171,16 +248,16 @@ void Particle::ParticleFeatures(PL& particle, int const N) {
     case (PL::KaonPlus) :
       check = FindParticle("Kaon+");
       if(check == 10) {
-        fParticleType[N] = new ParticleType ("Kaon+", 493.6, +1);
+        fParticleType[N] = new ParticleType ("Kaon+", 0.49367, +1);
         ++fNParticleType;
       } else {
         std::cout << "!! -- The particle Does alreay excist -- !!  " << '\n';
       }
     break;
     case (PL::KaonMinus) :
-      check = FindParticle("Kaon");
+      check = FindParticle("Kaon-");
       if(check == 10) {
-        fParticleType[N] = new ParticleType ("Kaon", 493.6, -1);
+        fParticleType[N] = new ParticleType ("Kaon-", 0.49367, -1);
         ++fNParticleType;
       } else {
         std::cout << "!! -- The particle Does alreay excist -- !!  " << '\n';
@@ -189,7 +266,7 @@ void Particle::ParticleFeatures(PL& particle, int const N) {
     case (PL::Kaon0) :
       check = FindParticle("Kaon0");
       if(check == 10) {
-        fParticleType[N] = new ParticleType ("Kaon0", 497.6, 0);
+        fParticleType[N] = new ResonanceType ("Kaon0", 0.89166, 0, 0.05);
         ++fNParticleType;
       } else {
         std::cout << "!! -- The particle Does alreay excist -- !!  " << '\n';
@@ -198,7 +275,7 @@ void Particle::ParticleFeatures(PL& particle, int const N) {
     case (PL::Antiproton) :
       check = FindParticle("Antiproton");
       if(check == 10) {
-        fParticleType[N] = new ParticleType ("Antiproton", 938.3, -1);
+        fParticleType[N] = new ParticleType ("Antiproton", 0.93827, -1);
         ++fNParticleType;
       } else {
         std::cout << "!! -- The particle Does alreay excist -- !!  " << '\n';

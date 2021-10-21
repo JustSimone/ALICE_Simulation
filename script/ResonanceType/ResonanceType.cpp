@@ -12,7 +12,7 @@ fWidth(Width)
 {}
 
 //Getter
-double ResonanceType::GetParticleRW() const { return fWidth; }
+double ResonanceType::GetParticleWidth() const { return fWidth; }
 
 //Printer
 void ResonanceType::Print() const {

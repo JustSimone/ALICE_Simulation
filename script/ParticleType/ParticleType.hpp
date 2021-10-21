@@ -17,6 +17,7 @@ public:
   std::string GetParticleName() const;
   double GetParticleMass() const;
   int GetParticleCharge() const;
+  virtual double GetParticleWidth() const;
 
   //Printer
   virtual void Print() const;

@@ -16,7 +16,7 @@ public:
   void Print() const;
 
   //Getter
-  double GetParticleRW() const;
+  double GetParticleWidth() const;
 };
 
 #endif

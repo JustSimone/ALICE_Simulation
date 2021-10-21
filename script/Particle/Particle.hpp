@@ -21,13 +21,18 @@ private:
 
   static int FindParticle(std::string PTBF); //Particle To Be Found
 
+  void Boost(double bx, double by, double bz);
+
 public:
 
   Particle(std::string name, double Px, double Py, double Pz);
-  static void AddParticle(std::string name, double mass, int charge, double with=0);
+  Particle() = default;
+  static void AddParticle(std::string name , double mass , int charge , double with=0);
   static void AddParticle(PL particle);
 
   int GetIndex() const;
+  int GetCharge() const;
+  std::string GetName() const;
   double GetPx() const;
   double GetPy() const;
   double GetPz() const;
@@ -35,7 +40,7 @@ public:
   double GetMomentum() const;
   double GetTotalEnergy() const;
   double GetInvMass(Particle& p) const;
-
+  double GetTrasMomentum() const;
 
   void SetIndex(std::string);
   void SetIndex(int index);
@@ -45,6 +50,8 @@ public:
   void PrintParticle() const;
 
   static void ParticleFeatures(PL& particle, int const N);
+
+  int Decay2Body(Particle& dau1, Particle& dau2) const;
 
 
 };

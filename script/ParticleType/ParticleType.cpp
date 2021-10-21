@@ -15,6 +15,8 @@ fCharge(Charge)
 std::string ParticleType::GetParticleName() const { return fName; }
 double ParticleType::GetParticleMass() const { return fMass; }
 int ParticleType::GetParticleCharge() const { return fCharge; }
+double ParticleType::GetParticleWidth() const { return 0; }
+
 
 //Printer
 void ParticleType::Print() const {
