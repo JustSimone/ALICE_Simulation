@@ -51,7 +51,7 @@ public:
 
   static void ParticleFeatures(PL& particle, int const N);
 
-  int Decay2Body(Particle& dau1, Particle& dau2) const;
+  int Decay2body(Particle &dau1,Particle &dau2) const;
 
 
 };

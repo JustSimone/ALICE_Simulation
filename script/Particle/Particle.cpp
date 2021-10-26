@@ -36,20 +36,20 @@ void Particle::AddParticle(std::string name, double mass, int charge, double wid
   }
 }
 
-int Particle::Decay2Body(Particle& dau1, Particle& dau2) const {
-
-  double MassP = GetMass();
-  double Mass1 = dau1.GetMass();
-  double Mass2 = dau2.GetMass();
-
-  if (MassP == 0.0) {
-    std::cout << "!! -- Somthing with no mass can not decay -- !!" << '\n';
+int Particle::Decay2body(Particle &dau1,Particle &dau2) const {
+  if(GetMass() == 0.0){
+    printf("Decayment cannot be preformed if mass is zero\n");
     return 1;
-  } else if (MassP < Mass1 + Mass2) {
-    std::cout << "!! -- Decayment cannot be preformed because mass is too low in this channel -- !!" << '\n';
-    return 2;
   }
-  if(fIndex < 10) {
+
+  double massMot = GetMass();
+  double massDau1 = dau1.GetMass();
+  double massDau2 = dau2.GetMass();
+
+  if(fIndex < 10){ // add width effect
+
+    // gaussian random numbers
+
     float x1, x2, w, y1, y2;
 
     double invnum = 1./RAND_MAX;
@@ -62,30 +62,24 @@ int Particle::Decay2Body(Particle& dau1, Particle& dau2) const {
     w = sqrt( (-2.0 * log( w ) ) / w );
     y1 = x1 * w;
     y2 = x2 * w;
-
-    MassP += fParticleType[fIndex]->GetParticleWidth() * y1;
+    massMot += fParticleType[fIndex]->GetParticleWidth() * y1;
   }
-
-  double MassSum2 = (Mass1 + Mass2) * (Mass1 + Mass2);
-  double MassP2 = MassP * MassP;
-  double pout = sqrt((MassP2 - MassSum2) * (MassP2 - MassSum2))/ (MassP*0.5);
-
-  double norm = 2 * M_PI/RAND_MAX;
-
+  if(massMot < massDau1 + massDau2){
+    printf("Decayment cannot be preformed because mass is too low in this channel\n");
+    return 2;
+  }
+  double pout = sqrt((massMot*massMot - (massDau1+massDau2)*(massDau1+massDau2))*(massMot*massMot - (massDau1-massDau2)*(massDau1-massDau2)))/massMot*0.5;
+  double norm = 2*M_PI/RAND_MAX;
   double phi = rand()*norm;
   double theta = rand()*norm*0.5 - M_PI/2.;
   dau1.SetMomentum(pout*sin(theta)*cos(phi),pout*sin(theta)*sin(phi),pout*cos(theta));
   dau2.SetMomentum(-pout*sin(theta)*cos(phi),-pout*sin(theta)*sin(phi),-pout*cos(theta));
-
-  double energy = sqrt(fPx*fPx + fPy*fPy + fPz*fPz + MassP2);
-
+  double energy = sqrt(fPx*fPx + fPy*fPy + fPz*fPz + massMot*massMot);
   double bx = fPx/energy;
   double by = fPy/energy;
   double bz = fPz/energy;
-
   dau1.Boost(bx,by,bz);
   dau2.Boost(bx,by,bz);
-
   return 0;
 }
 
@@ -129,7 +123,7 @@ double Particle::GetMass() const {
 }
 
 double Particle::GetMomentum() const {
-  return fPx*fPx + fPy*fPy + fPz*fPz;
+  return (fPx*fPx + fPy*fPy + fPz*fPz);
 }
 
 double Particle::GetTrasMomentum() const {
@@ -145,9 +139,8 @@ double Particle::GetTotalEnergy() const {
 double Particle::GetInvMass(Particle& p) const {
   double E1 = GetTotalEnergy();
   double E2 = p.GetTotalEnergy();
-  double p1 = GetMomentum();
-  double p2 = p.GetMomentum();
-  double M = sqrt((E1+ E2)*(E1+ E2) - (sqrt(p1)+sqrt(p2))*(sqrt(p1)+sqrt(p2)));
+  double Psum = (fPx+p.GetPx())*(fPx+p.GetPx())+(fPy+p.GetPy())*(fPy+p.GetPy())+(fPz+p.GetPz())*(fPz+p.GetPz());
+  double M = sqrt((E1+ E2)*(E1+ E2) - Psum);
   return M;
 }
 
