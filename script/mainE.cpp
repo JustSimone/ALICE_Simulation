@@ -4,7 +4,7 @@
 #include <cmath>
 
 void ProgressionBar(int Progression) {
-  double n = (Progression/1.04049E9);
+  double n = (Progression/5.2E8);
   std::cout << "[";
     int pos = 70 * n;
     for (int i = 0; i < 70; ++i) {
@@ -38,10 +38,10 @@ int main() {
   TH1F* type = new TH1F("type", "Particles Type", 7, 0, 7);
   TH1F* momentum = new TH1F("momentum", "Momentum", 1000, 0, 7);
   TH1F* tmomentum = new TH1F("tmomentum", "Transversal Momentum", 1000, 0, 7);
-  TH1F* invmass = new TH1F("invmass", "Invarian Mass", 10000, 0, 5);
+  TH1F* invmass = new TH1F("invmass", "Invarian Mass", 1000, 0, 5);
   TH1F* energy = new TH1F("energy","Energy", 1000, 0, 7);
-  TH1F* azim = new TH1F("azim", "Azimutal Angol", 100, 0, pi);
-  TH1F* polar = new TH1F("polar", "Polar Angol", 100, 0, 2*pi);
+  TH1F* azim = new TH1F("azim", "Azimutal Angol", 1000, 0, pi);
+  TH1F* polar = new TH1F("polar", "Polar Angol", 1000, 0, 2*pi);
   TH1F* invmassdis = new TH1F("invmassids", "Invariant Mass opposite charges", 1000, 0, 5);
   TH1F* invmasscon = new TH1F("invmasscon", "invariant Mass same charges", 1000, 0, 5);
   TH1F* invppkmpmkp = new TH1F("invppkmpmkp", "Invariant Mass pion+/kaon- & pion-/kaon+", 1000, 0, 5);

@@ -5,7 +5,6 @@ project(ALICE_Simulation)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
-set(CMAKE_BUILD_TYPE RELEASE)
 
 find_package(ROOT 6.22 CONFIG REQUIRED COMPONENTS)
   if(ROOT_FOUND)
@@ -22,6 +21,3 @@ add_subdirectory(ParticleType)
 add_subdirectory(ResonanceType)
 
 target_link_libraries(ALICE_Simulation Particle ParticleType ResonanceType ${ROOT_LIBRARIES} ${ROOT_EXE_LINKER_FLAGS})
-
-target_compile_options(ALICE_Simulation PRIVATE -O3)
-
