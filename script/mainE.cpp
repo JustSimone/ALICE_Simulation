@@ -4,7 +4,7 @@
 #include <cmath>
 
 void ProgressionBar(int Progression) {
-  double n = (Progression/5.2E8);
+  double n = (Progression/5.22E8);
   std::cout << "[";
     int pos = 70 * n;
     for (int i = 0; i < 70; ++i) {
@@ -33,9 +33,17 @@ int main() {
   Particle::AddParticle(PL::KaonMinus);
   Particle::AddParticle(PL::Proton);
   Particle::AddParticle(PL::Antiproton);
-  Particle::AddParticle("Kaon0",0.89166, 0, 0.05);
+  Particle::AddParticle(PL::Kaon0);
 
   TH1F* type = new TH1F("type", "Particles Type", 7, 0, 7);
+  type->GetXaxis()->TAxis::SetBinLabel(1, "Pion+");
+  type->GetXaxis()->TAxis::SetBinLabel(2, "Pion-");
+  type->GetXaxis()->TAxis::SetBinLabel(3, "Kaon+");
+  type->GetXaxis()->TAxis::SetBinLabel(4, "kaon-");
+  type->GetXaxis()->TAxis::SetBinLabel(5, "Proton");
+  type->GetXaxis()->TAxis::SetBinLabel(6, "Antiproton");
+  type->GetXaxis()->TAxis::SetBinLabel(7, "Kaon0");
+
   TH1F* momentum = new TH1F("momentum", "Momentum", 1000, 0, 7);
   TH1F* tmomentum = new TH1F("tmomentum", "Transversal Momentum", 1000, 0, 7);
   TH1F* invmass = new TH1F("invmass", "Invarian Mass", 1000, 0, 5);
@@ -43,10 +51,12 @@ int main() {
   TH1F* azim = new TH1F("azim", "Azimutal Angol", 1000, 0, pi);
   TH1F* polar = new TH1F("polar", "Polar Angol", 1000, 0, 2*pi);
   TH1F* invmassdis = new TH1F("invmassids", "Invariant Mass opposite charges", 1000, 0, 5);
-  TH1F* invmasscon = new TH1F("invmasscon", "invariant Mass same charges", 1000, 0, 5);
+  TH1F* invmasscon = new TH1F("invmasscon", "Invariant Mass same charges", 1000, 0, 5);
   TH1F* invppkmpmkp = new TH1F("invppkmpmkp", "Invariant Mass pion+/kaon- & pion-/kaon+", 1000, 0, 5);
+  invppkmpmkp->SetLineColor(kRed);
   TH1F* invppkppmkm = new TH1F("invppkppmkm", "Invariant Mass pion+/kaon+ & pion-/kaon-", 1000, 0, 5);
-  TH1F* decay = new TH1F("decay", "Invairant mass of particles from the decay", 1000, 0, 5);
+  invppkppmkm->SetLineColor(kBlue);
+  TH1F* decay = new TH1F("decay", "Invairant mass of particles from the decay", 1000, 0, 5 );
 
   //std::cout << "The following Particles had been updated: " << '\n';
   //Particle::PrintTable();
@@ -101,7 +111,7 @@ int main() {
           Particella[c+1].SetIndex("Kaon+");
         }
         int check = Particella[j].Decay2body(Particella[c], Particella[c+1]);
-        if (check != 0) { return check; }
+        if (check != 0) return check;
         double MassInvCondition = Particella[c].GetInvMass(Particella[c+1]);
         decay->Fill(MassInvCondition);
         ExtraCounter = ExtraCounter +2;
@@ -152,8 +162,10 @@ int main() {
   TCanvas *canv1 = new TCanvas("canv1", "Type");
   type->Draw();
   TCanvas *canv2 = new TCanvas("canv2", "Momentum");
+  canv2->Divide(1,2);
+  canv2->cd(1);
   momentum->Draw();
-  TCanvas *canv3 = new TCanvas("canv3", "tMomentum");
+  canv2->cd(2);
   tmomentum->Draw();
   TCanvas *canv12 = new TCanvas("canv12", "energy");
   energy->Draw();
@@ -167,16 +179,20 @@ int main() {
   invmassdis->Draw();
   TCanvas *canv8 = new TCanvas("canv8", "invariant Mass same charges");
   invmasscon->Draw();
-  TCanvas *canv9 = new TCanvas("canv9", "Invariant Mass pion+/kaon- & pion-/kaon+");
+  TCanvas *canv9 = new TCanvas("canv9", "Invariant Mass of pion and kaon");
+  canv9->Divide(1,2);
+  canv9->cd(1);
+  invppkppmkm->Draw();
+  canv9->cd(2);
   invppkmpmkp->Draw();
   TCanvas *canv10 = new TCanvas("canv10", "Invariant Mass pion+/kaon+ & pion-/kaon-");
   invppkppmkm->Draw();
+  invppkmpmkp->Draw("same");
   TCanvas *canv11 = new TCanvas("canv11", "Decay");
   decay->Draw();
 
   canv1->Print("../histograms/type.pdf");
-  canv2->Print("../histograms/Momentum.pdf");
-  canv3->Print("../histograms/tMomentum.pdf");
+  canv2->Print("../histograms/Momentums.pdf");
   canv12->Print("../histograms/energy.pdf");
   canv4->Print("../histograms/invMass.pdf");
   canv5->Print("../histograms/polarAngle.pdf");
@@ -201,6 +217,7 @@ int main() {
   invppkmpmkp->Write();
   invppkppmkm->Write();
   decay->Write();
+  RFile->ls();
   RFile->Close();
 
 

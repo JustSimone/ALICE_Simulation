@@ -16,11 +16,21 @@ It consists on the study of the collisions of heavy particles to achieve tempera
 | Proton - (P-) | 4.5% |
 | Kaon 0 (k0) | 1.5% |
 
+If the particle generated is a Kaon 0 then it will decay into a Pion and a Kaon with opposite charges. This simulation will give as output a series of histograms about the characteristics of the particles generated. In particular there are histograms about:
+ - Number of each type of particle;
+ - Momentum of each particle;
+ - Transversal Momentum of each particle;
+ - Energy of each particle;
+ - Invariant Mass of each particle with all the others;
+ - Invariant Mass of the particles with the same charges;
+ - Invariant Mass of the particles with the opposite charges;
+ - Invariant Mass of the particles arising from the decay of k0;
+
 <h2> Building </h2>
 <p>To build the code using the main it is recommended to use <a href="https://cmake.org">Cmake</a>. You need to find yourself into the ALICE_Simulation/script folder into your terminal and use the following commands: </p>
 
 ~~~
-cmake -S . -B Build
+cmake -DCMAKE_BUILD_TYPE=Release -S . -B Build
 cmake --build Build
 ./build/ALICE_Simulation
 ~~~
@@ -32,3 +42,5 @@ cmake --build Build
 .L script/ResonanceType/ResonanceType.cpp+
 .L script/Particle/Particle.cpp+
 ~~~
+
+This commands allows you to use only the library, if you want to execute the main program you'll need to use cmake.

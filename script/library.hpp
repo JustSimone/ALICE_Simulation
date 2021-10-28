@@ -5,6 +5,7 @@
 #include "ResonanceType/ResonanceType.hpp"
 #include "Particle/Particle.hpp"
 #include "TRandom.h"
+#include "TAxis.h"
 #include "TH1.h"
 #include "TCanvas.h"
 #include "TFile.h"

@@ -6,3 +6,4 @@ build
 *.so
 *.d
 *.pcm
+*.root
