@@ -1,4 +1,4 @@
-#include "../../librarys/library.hpp"
+#include "../../libraries/library.hpp"
 
 #include <string>
 #include <iostream>

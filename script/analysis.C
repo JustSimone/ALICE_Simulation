@@ -1,3 +1,4 @@
+
 void setStyle() {
 	gROOT->SetStyle("Modern");
 	gStyle->SetPalette(59);
@@ -6,7 +7,7 @@ void setStyle() {
 
 void Checks() {
 	TFile* f = new TFile("Alice_Simulation.root","read");
-	// Print the expected values ///////////////////////////
+	Print the expected values ///////////////////////////
 	TH1F* type = (TH1F*)f->Get("type");
 	for(int i=1; i<8; ++i) {
 		cout<<type->GetXaxis()->GetBinLabel(i) <<" | "<<type->GetBinContent(i) << '\n';

@@ -1,5 +1,5 @@
 
-#include "../librarys/library.hpp"
+#include "../libraries/library.hpp"
 #include <iostream>
 #include <cmath>
 
