@@ -50,16 +50,20 @@ int main() {
   TH1F* energy = new TH1F("energy","Energy", 1000, 0, 7);
   TH1F* azim = new TH1F("azim", "Azimutal Angol", 1000, 0, pi);
   TH1F* polar = new TH1F("polar", "Polar Angol", 1000, 0, 2*pi);
-  TH1F* invmassdis = new TH1F("invmassids", "Invariant Mass opposite charges", 1000, 0, 5);
+  TH1F* invmassdis = new TH1F("invmassdis", "Invariant Mass opposite charges", 1000, 0, 5);
   TH1F* invmasscon = new TH1F("invmasscon", "Invariant Mass same charges", 1000, 0, 5);
   TH1F* invppkmpmkp = new TH1F("invppkmpmkp", "Invariant Mass pion+/kaon- & pion-/kaon+", 1000, 0, 5);
   invppkmpmkp->SetLineColor(kRed);
   TH1F* invppkppmkm = new TH1F("invppkppmkm", "Invariant Mass pion+/kaon+ & pion-/kaon-", 1000, 0, 5);
   invppkppmkm->SetLineColor(kBlue);
-  TH1F* decay = new TH1F("decay", "Invairant mass of particles from the decay", 1000, 0, 5 );
+  TH1F* decay = new TH1F("decay", "Invairant mass of particles from the decay", 1000, 0, 5);
 
-  //std::cout << "The following Particles had been updated: " << '\n';
-  //Particle::PrintTable();
+  invmass->Sumw2();
+  invmassdis->Sumw2();
+  invmasscon->Sumw2();
+  invppkmpmkp->Sumw2();
+  invppkppmkm->Sumw2();
+  decay->Sumw2();
 
   int const N = 100;
   int const extra = 20;
@@ -133,10 +137,10 @@ int main() {
      for(int h = k+1 ; h<N+ExtraCounter; ++h){
        MassInv = Particella[k].GetInvMass(Particella[h]);
        invmass->Fill(MassInv);
-       if(Particella[k].GetCharge() != Particella[h].GetCharge()) {
+       if((Particella[k].GetCharge() * Particella[h].GetCharge()) < 0) {
          double MassInvCondition = Particella[k].GetInvMass(Particella[h]);
          invmassdis->Fill(MassInvCondition);
-       } else if(Particella[k].GetCharge() == Particella[h].GetCharge()) {
+       } else if((Particella[k].GetCharge() * Particella[h].GetCharge()) > 0) {
          double MassInvCondition = Particella[k].GetInvMass(Particella[h]);
          invmasscon->Fill(MassInvCondition);
        }
@@ -176,20 +180,20 @@ int main() {
   TCanvas *canv6 = new TCanvas("canv6", "azimutalAngle");
   azim->Draw();
   TCanvas *canv7 = new TCanvas("canv7", "Invariant Mass opposite charges");
-  invmassdis->Draw();
+  invmassdis->Draw("histo");
   TCanvas *canv8 = new TCanvas("canv8", "invariant Mass same charges");
-  invmasscon->Draw();
+  invmasscon->Draw("histo");
   TCanvas *canv9 = new TCanvas("canv9", "Invariant Mass of pion and kaon");
   canv9->Divide(1,2);
   canv9->cd(1);
-  invppkppmkm->Draw();
+  invppkppmkm->Draw("histo");
   canv9->cd(2);
-  invppkmpmkp->Draw();
+  invppkmpmkp->Draw("histo");
   TCanvas *canv10 = new TCanvas("canv10", "Invariant Mass pion+/kaon+ & pion-/kaon-");
-  invppkppmkm->Draw();
-  invppkmpmkp->Draw("same");
+  invppkppmkm->Draw("histo");
+  invppkmpmkp->Draw("histo same");
   TCanvas *canv11 = new TCanvas("canv11", "Decay");
-  decay->Draw();
+  decay->Draw("histo");
 
   canv1->Print("../histograms/type.pdf");
   canv2->Print("../histograms/Momentums.pdf");
