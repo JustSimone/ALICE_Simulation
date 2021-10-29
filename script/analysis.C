@@ -4,6 +4,15 @@ void setStyle() {
 	gStyle->SetOptFit(221);
 }
 
+void Checks() {
+	TFile* f = new TFile("Alice_Simulation.root","read");
+	// Print the expected values ///////////////////////////
+	TH1F* type = (TH1F*)f->Get("type");
+	for(int i=1; i<8; ++i) {
+		cout<<type->GetXaxis()->GetBinLabel(i) <<" | "<<type->GetBinContent(i) << '\n';
+	}
+}
+
 void macro() {
 
 	setStyle();

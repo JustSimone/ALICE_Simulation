@@ -1,5 +1,5 @@
 
-#include "library.hpp"
+#include "../librarys/library.hpp"
 #include <iostream>
 #include <cmath>
 
@@ -21,11 +21,6 @@ int main() {
   int progression = 0;
   TRandom* Random = new TRandom();
   Random->SetSeed(0);
-
-  // std::default_random_engine gen(0);
-  // std::uniform_real_distribution<double> dis1(0.0,1.0);
-  // std::uniform_real_distribution<double> dis100(0.0,100.0);
-  // std::exponential_distribution<double> exp(1);
 
   Particle::AddParticle(PL::PionPlus);
   Particle::AddParticle(PL::PionMinus);
@@ -104,7 +99,6 @@ int main() {
         Particella[j].SetIndex("Antiproton");
       } else {
         Particella[j].SetIndex("Kaon0");
-
         int c = ExtraCounter + N;
         double chance = Random->Uniform(0.0,1.0);
         if(chance < 0.5) {
