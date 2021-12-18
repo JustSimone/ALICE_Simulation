@@ -1,6 +1,7 @@
 \documentclass[a4paper, 11pt]{article}
 \usepackage{geometry}
 \usepackage{blindtext}
+\usepackage{amsmath}
 \usepackage{hyperref}
 
 \geometry{
@@ -15,7 +16,7 @@
   \maketitle
   \section{Introduction}
 
-  ALICE\_Simulation is a computer program that simulates the ALICE experiment conducted at CERN since 1993, which consists of analyzing the collisions occurring between particles at very high energies (1). Those would create different particles following a probability distribution (\ref{table1}).
+  ALICE\_Simulation is a computer program that simulates the ALICE experiment conducted at CERN since 1993, which consists of analyzing the collisions occurring between particles at very high energies$^{(1)}$. Those would create different particles following a probability distribution (Table\ref{table1}).
     \begin{table}[h!]
       \centering
       \begin{tabular}{ c c }
@@ -43,62 +44,24 @@
       The code's division into different files and folders has the background idea of making it more orderly. There are eight files for the simulation program (one main file: \verb|mainE.cpp|, one libraries file: \verb|library.hpp|, three header files: \verb|ParticleType.hpp|, \verb|ResonanceType.hpp|, \verb|Particle.hpp|, and three source files: \verb|ParticleType.cpp|, \verb|Reso|- \verb|nanceType.cpp|, \verb|Particle.cpp|) and one for the data analysis (\verb|analysis.C|).
       The header files contain the classes implemented for the proper functioning of the simulation. Meanwhile, the source files contain the implementation of the methods defined in the headers.
       \subsection*{ParticleType Class}
-      The class \verb|ParticleType| creates a homonymous type that contains the name, the mass, and the charge of a particular particle, respectively as a \verb|std::string|, a \verb|double|, and an \verb|integer|. This class has five methods, two of which are virtual:
-      \begin{itemize}
-        \item{\verb|GetParticleName()|; }
-        \item{\verb|GetParticleMass()|; }
-        \item{\verb|GetParticleCharge()|; }
-        \item{\verb|GetParticleWidth()| (Virtual); }
-        \item{\verb|Print()| (Virtual); }
-      \end{itemize}
-
-      All the "GetParticle" functions are getter functions so that return the value of the variable for which called. Meanwhile, the Print function prints a particle's characteristics.
+      The class \verb|ParticleType| creates a homonymous type that contains the name, the mass, and the charge of a particular particle, respectively as a \verb|std::string|, a \verb|double|, and an \verb|integer|. This class has five methods, two of which are virtual.
       \subsection* {ResonanceType Class}
-      The \verb|ResonanceType| class is a derived class from \verb|Particle|- \verb|Type| and, in addition to the base class items, it contains the information about the width of the particle as a double. The type defined with the name of this class creates a particle with a width. Contrarily to what happens for a \verb|ParticleType| object, in which the width of the particle is always zero. This class has two methods, both of them are the override of the already existing virtual methods in the base class:
-      \begin{itemize}
-        \item{\verb|GetParticleWidth()|; }
-        \item{\verb|Print()|; }
-      \end{itemize}
+      The \verb|ResonanceType| class is a derived class from \verb|ParticleType| and, in addition to the base class items, it contains the information about the width of the particle as a double. The type defined with the name of this class creates a particle with a width. Contrarily to what happens for a \verb|ParticleType| object, in which the width of the particle is always zero. This class has two methods, both of them are the override of the already existing virtual methods in the base class.
       \subsection* {Particle Class}
-      The class \verb|Particle| is the one that allows creating a particle giving it momentum and making it decay if necessary. It contains the three momentum components (\verb|fPx|, \verb|fPy|, \verb|fPz|), a pointer to an array of ParticleType and its dimension (\verb|fParticleType|, \verb|fMaxNumParticleType|), an index of particle type (\verb|fNParticleType|), and a code proper of each particle type (\verb|fIndex|). This class has several methods, some of which are static, which means they are accessible from the main without defining an object:
-      \begin{itemize}
-        \item{\verb|FindParticle()| (Static); }
-        \\\textit{(This function returns the value of the code of a particle type)}
-        \item{\verb|Boost()|; }
-        \\\textit{(This function Boost the Lorenz vector)}
-        \item{\verb|AddParticle()| (Static); }
-        \\\textit{(This function allows to allocate a new particle type in the vector)}
-        \item{\verb|Decay2body()|; }
-        \\\textit{(This function decay the particle for which called)}\newpage
-        \item{\verb|ParticleFeatures()| (Static); }
-        \\\textit{(This fucntion has in memory the characteristics of some particle type)}
-        \\ \\ \textbf{Getter Functions:}
-        \\\textit{(All of this function return the value of the variable for which called)}
-        \item{\verb|GetIndex()|; }
-        \item{\verb|GetCharge()|; }
-        \item{\verb|GetName()|; }
-        \item{\verb|GetPx()|; }
-        \item{\verb|GetPy()|; }
-        \item{\verb|GetPz()|; }
-        \item{\verb|GetMass()|; }
-        \item{\verb|GetMomentum()|; }
-        \item{\verb|GetTotalEnergy()|; }
-        \item{\verb|GetInvMass()|; }
-        \item{\verb|GetTrasMomentum()|; }
-        \\ \\ \textbf{Setter Functions:}
-        \\\textit{(All of this functions set the value of the variable for which called)}
-        \item{\verb|SetIndex()|; }
-        \item{\verb|SetMomentum()|; }
-        \\ \\ \textbf{Printer Functions:}
-        \\\textit{(All of this functions give a standard output of the information for which called)}
-        \item{\verb|PrintTable()| (Static); }
-        \item{\verb|PrintParticle()|; }
-      \end{itemize}
+      The class \verb|Particle| is the one that allows creating a particle giving it a random momentum and making it decay into other particles if necessary. It also creates a set of particles type, each with a proper index as an identifier. The variables in the class are three momentum components (\verb|fPx|, \verb|fPy|, \verb|fPz|), an array of ParticleType and its dimension (\verb|fParticleType|, \verb|fMaxNumParticleType|), an index of particle type (\verb|fNParticleType|), and a numeric code proper of each particle type \verb|fIndex|). This class has, also, several methods, including some static, which means they are accessible from the main without defining an object.
     \section{Generation}
-
+      In the simulation, there had been 10000 collision events, each using a set of 100 particles. The particles resulting from the collisions were Positive Pions ($\pi^+$), Negative Pions ($\pi^-$), Positive Kaons ($k^+$), Negative Kaons ($k^-$), Protons ($p^+$), Antiprotons ($p^-$), and Resonance Kaons ($k^*$), generated randomly using a uniform distribution and the probability shown in Table 1.  The module of the momentum of the particles comes from an exponential distribution with a mean of 1. While its direction drives from the cartesian components:
+      \begin{equation}
+        \begin{cases}
+          p_x = |p| \cdot \cos \theta \cdot \cos \phi\\
+          p_y = |p| \cdot \cos \theta \cdot \sin \phi\\
+          p_z = |p| \cdot \sin \theta
+        \end{cases}
+      \end{equation}\\
+      Where the azimuthal angle theta ($\theta$) and the polar angle phi ($\phi$) are generated using a uniform random distribution respectively from 0 to $\pi$ and the second from 0 to $2\pi$.
     \section* {Work Citacion}
     \begin{enumerate}
-      \item{Alice Experiment. CERTN. \url{https://home.cern/science/experiments/alice}. November $29^{th}$, 2021.}
+      \item{Alice Experiment. CERN. \url{https://home.cern/science/experiments/alice} . November $29^{th}$, 2021.}
     \end{enumerate}
 
 \end{document}
