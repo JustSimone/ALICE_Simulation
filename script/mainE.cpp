@@ -120,10 +120,8 @@ int main() {
       tmomentum->Fill(PTModule);
       double PModule = sqrt(Particella[j].GetMomentum());
       momentum->Fill(PModule);
-      if(Particella[j].GetName() != "Kaon0") {
-        double Energy = Particella[j].GetTotalEnergy();
-        energy->Fill(Energy);
-      }
+      double Energy = Particella[j].GetTotalEnergy();
+      energy->Fill(Energy);
       ++progression;
     }
     double MassInv;
