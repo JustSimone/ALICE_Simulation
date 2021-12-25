@@ -1,12 +1,17 @@
 \documentclass[a4paper, 11pt]{article}
 \usepackage{geometry}
+\usepackage{pdfpages}
+\usepackage{graphicx}
 \usepackage{blindtext}
 \usepackage{amsmath}
+\usepackage{floatrow}
+\usepackage{subfig}
+\usepackage{caption}
 \usepackage{hyperref}
 
 \geometry{
-  top=25mm,
-  bottom = 40mm
+  top=35mm,
+  bottom = 45mm
 }
 
 \begin{document}
@@ -59,8 +64,40 @@
         \end{cases}
       \end{equation}\\
       Where the azimuthal angle theta ($\theta$) and the polar angle phi ($\phi$) are generated using a uniform random distribution respectively from 0 to $\pi$ and the second from 0 to $2\pi$.
-      In the case that a Resonance Kaon is created from the collision of particles, it deacis into eather a Positive Pion and a Negative Kaon or a Negative Pion and a Positive Kaon with the same probability. The momentum of this new two particles comes froma a normal distribution.
-    \section* {Work Citacion}
+      In the case that a Resonance Kaon is created from the collision of particles, it deacis into eather a Positive Pion and a Negative Kaon or a Negative Pion and a Positive Kaon with the same probability. The momentum of this new two particles comes from a normal distribution.
+    \section{Analysis}
+    The generation of particles types is compatible with the theoretical calculation as shown in Table. \ref{table2:Table 2}
+    \begin{table}[h!]
+      \centering
+      \begin{tabular}{ c c c c }
+        \hline
+        Particle Type & Entries & Error & Theo. Ent. \\
+        \hline
+        $\pi^+$ & $3997740$ & $1999$ & $4\cdot10^6$\\
+        $\pi^-$ & $4002160$ & $2001$ & $4\cdot10^6$\\
+        $k^+$ & $500290$ & $707$ & $5\cdot10^5$\\
+        $k^-$ & $499781$ & $707$ & $5\cdot10^5$\\
+        $P^+$ & $449544$ & $671$ & $4.5\cdot10^5$\\
+        $P^-$ & $450121$ & $671$ & $4.5\cdot10^5$\\
+        $k^*$ & $100366$ & $317$ & $1\cdot10^5$\\
+        \hline
+      \end{tabular}
+      \caption{ \label{table2:Table 2}
+      \textit{The table shows the entries got from the simulation with the respective error calculated using root, and the theoretical entries calculated taking the percentage of each particle type from the total amount of particles.}
+      }
+    \end{table}\\
+    As well as the angles and the momentum distributios are fitting the relative uniform and exponential distribution as shown in the images 1 and 2.
+    \begin{figure}[h!]
+      \centering
+      \includegraphics[width=9cm]{c1.pdf}
+      \caption{\label{f1} \textit{The image shows the fit between the exponential distribution compared with the momentum histogram with occurrences randomly generated. The Chi-square divided by the number of degrees of freedom is very close to one, meaning that the histogram very well approximates an exponential distribution with a mean of 1.}}
+    \end{figure}
+    \begin{figure}
+      \includegraphics[width=9cm]{c2.pdf}
+      \caption{\label{f1} \textit{The image shows the fit between the uniform distribution compared with the histogram of the angles randomly generated. The Chi-square divided by the number of degrees of freedom is very close to one, meanning that the histograms very well approximate an uniform distribution.}}
+    \end{figure}
+    \\
+    \section* {Word Citacion}
     \begin{enumerate}
       \item{Alice Experiment. CERN. \url{https://home.cern/science/experiments/alice} . November $29^{th}$, 2021.}
     \end{enumerate}

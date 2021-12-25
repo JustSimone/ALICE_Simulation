@@ -5,43 +5,67 @@ void setStyle() {
 	gStyle->SetOptFit(111);
 }
 
+// Function that checks the generation of the values ////////
+
 void Checks() {
 
-}
-
-void macro() {
-
 	int optarg = 1111;
-	TColor* myYellow = gROOT->GetColor(10);
 
-	TFile* f = new TFile("Alice_Simulation.root","read");
+	// Check of the generqation of particles /////////
+	double particleProb[7];
+
+ 	particleProb[0]= 0.4;
+ 	particleProb[1]= 0.4;
+ 	particleProb[2]= 0.05;
+ 	particleProb[3]= 0.05;
+ 	particleProb[4]= 0.045;
+ 	particleProb[5]= 0.045;
+ 	particleProb[6]= 0.01;
+
+	TFile* c = new TFile("Alice_Simulation.root","read");
+	TH1F* type = (TH1F*)c->Get("type");
+	cout<<"Bin Content - Error - Theo. Val.\n";
+	cout<<"----------------------------------\n";
+	for(int i=1; i<8; ++i) {
+		cout<<type->GetBinContent(i)<<" - "<<type->GetBinError(i)<< " - "<< particleProb[i-1]*1E7<< '\n';
+		cout<<"----------------------------------\n";
+	}
+
+	// CCheck of the shape of the momentum ///////
 	TCanvas* c1 = new TCanvas("c1", "Momento");
-	TH1F* Mom = (TH1F*)f->Get("momentum");
+	TH1F* Mom = (TH1F*)c->Get("momentum");
 	Mom->Fit("expo","","");
 	Mom->SetFillColorAlpha(kBlue, 0.3);
 	Mom->SetLineWidth(6);
 	Mom->Draw();
-	c1->Print("../fit/Momentum_fit.pdf");
+	c1->Print("--/fit//Momwntumfit.png");
+	c1->Print("../fit/Momentumfit.pdf");
 	gPad->Update();
 	TPaveStats* ft = (TPaveStats*)Mom->FindObject("stats");
 	ft->SetOptFit(optarg);
+	cout<<"----------------------------------\n";
+	cout<<Mom->GetMean()<<" - "<<Mom->GetRMS()<<" - "<< 1<<'\n';
+	cout<<"----------------------------------\n";
 
+	// Cheack of the angles ////////////////////
 	TCanvas* c2 = new TCanvas("c2", "Angoli");
 	c2->Divide(1,2);
 
 	c2->cd(1);
-	TH1F* Pol = (TH1F*)f->Get("polar");
+	TH1F* Pol = (TH1F*)c->Get("polar");
 	Pol->Fit("pol0");
 	TF1* f1 = Pol->GetFunction("pol0");
 	f1->SetLineColor(kBlack);
 	Pol->SetLineColor(kRed);
 	Pol->Draw();
 	gPad->Update();
-	TPaveStats* ft1 = (TPaveStats*)Pol->FindObject("stats");
+	TPaveStats* ft1 = (TPaveStats*)Pol->GetListOfFunctions()->FindObject("stats");
 	ft1->SetOptFit(optarg);
+	gStyle->SetStatW(.2);
+	gStyle->SetStatH(.4);
 
 	c2->cd(2);
-	TH1F* azim = (TH1F*)f->Get("azim");
+	TH1F* azim = (TH1F*)c->Get("azim");
 	azim->Fit("pol0");
 	TF1* f2 = azim->GetFunction("pol0");
 	f2->SetLineColor(kBlack);
@@ -50,9 +74,16 @@ void macro() {
 	gPad->Update();
 	TPaveStats* ft5 = (TPaveStats*)azim->FindObject("stats");
 	ft5->SetOptFit(optarg);
+	c2->Print("../fit/anglesfit.png");
+	c2->Print("../fit/anglesfit.pdf");
+}
 
-	c2->Print("../fit/angles_fit.pdf");
+// Function that analyze the function for the detection of the Resonance Kaon //////////
 
+void analysis() {
+	int optarg = 1111;
+	TColor* myYellow = gROOT->GetColor(10);
+	TFile* f = new TFile("Alice_Simulation.root","read");
 
 	TCanvas* c3 = new TCanvas("c3", "Cariche");
 	TH1F* Im1 = (TH1F*)f->Get("invmassdis");
