@@ -38,7 +38,6 @@ void Checks() {
 	Mom->SetFillColorAlpha(kBlue, 0.3);
 	Mom->SetLineWidth(6);
 	Mom->Draw();
-	c1->Print("--/fit//Momwntumfit.png");
 	c1->Print("../fit/Momentumfit.pdf");
 	gPad->Update();
 	TPaveStats* ft = (TPaveStats*)Mom->FindObject("stats");
@@ -74,8 +73,54 @@ void Checks() {
 	gPad->Update();
 	TPaveStats* ft5 = (TPaveStats*)azim->FindObject("stats");
 	ft5->SetOptFit(optarg);
-	c2->Print("../fit/anglesfit.png");
 	c2->Print("../fit/anglesfit.pdf");
+
+	// Check the entrance for each histogram
+
+	TH1F* tmom = (TH1F*)c->Get("tmomentum");
+	TH1F* imass = (TH1F*)c->Get("invmass");
+	TH1F* en = (TH1F*)c->Get("energy");
+	TH1F* imd = (TH1F*)c->Get("invmassdis");
+	TH1F* imc = (TH1F*)c->Get("invmasscon");
+	TH1F* inv1 = (TH1F*)c->Get("invppkmpmkp");
+	TH1F* inv2 = (TH1F*)c->Get("invppkppmkm");
+	TH1F* dec = (TH1F*)c->Get("decay");
+
+	cout<<"---------------------------------------\n";
+	cout<<"Entries Momentum: "<< Mom->GetEntries()<<" - "<< 1E7<<'\n';
+
+	cout<<"---------------------------------------\n";
+	cout<<"Entries tMoment: "<< tmom->GetEntries()<<" - "<<1E7<<'\n';
+
+	cout<<"---------------------------------------\n";
+	cout<<"Entries invariant mass: "<< imass->GetEntries()<<" - "<<1E5*101*100/2<<'\n';
+
+	cout<<"---------------------------------------\n";
+	cout<<"Entries energy: "<< en->GetEntries()<<"- "<<1E7<<'\n';
+
+	cout<<"---------------------------------------\n";
+	cout<<"Entries invariant mass opposite: "<< imd->GetEntries()<<" - "<<1E5*101*100*0.495/2<<'\n';
+
+	cout<<"---------------------------------------\n";
+	cout<<"Entries invariant mass concord: "<< imc->GetEntries()<<" - "<<1E5*101*100*0.495/2<<'\n';
+
+	cout<<"---------------------------------------\n";
+	cout<<"Entries invariant mass 1: "<< inv1->GetEntries()<<" - "<<1E5*101*100<<'\n';
+
+	cout<<"---------------------------------------\n";
+	cout<<"Entries invariant mass 2: "<< inv2->GetEntries()<<" - "<<1E5*101*100<<'\n';
+
+	cout<<"---------------------------------------\n";
+	cout<<"Entries decay: "<< dec->GetEntries()<<" - "<<1E7*0.01<<'\n';
+
+	cout<<"---------------------------------------\n";
+	cout<<"Entries azimutal angles: "<< azim->GetEntries()<<" - "<<1E7<<'\n';
+
+	cout<<"---------------------------------------\n";
+	cout<<"Entries polar angles: "<< Pol->GetEntries()<<" - " << 1E7<<'\n';
+	cout<<"---------------------------------------\n";
+
+
 }
 
 // Function that analyze the function for the detection of the Resonance Kaon //////////

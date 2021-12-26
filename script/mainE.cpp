@@ -48,8 +48,12 @@ int main() {
   TH1F* invmassdis = new TH1F("invmassdis", "Invariant Mass opposite charges", 1000, 0, 5);
   TH1F* invmasscon = new TH1F("invmasscon", "Invariant Mass same charges", 1000, 0, 5);
   TH1F* invppkmpmkp = new TH1F("invppkmpmkp", "Invariant Mass pion+/kaon- & pion-/kaon+", 1000, 0, 5);
+  //invariant (i) mass (m) of pion (p) plus (p) and kaon (k) minus (m) or pion (p) minus (m) and kaon (k) plus (p)
+  //i-m-p-p-k-m-p-m-k-p
   invppkmpmkp->SetLineColor(kRed);
   TH1F* invppkppmkm = new TH1F("invppkppmkm", "Invariant Mass pion+/kaon+ & pion-/kaon-", 1000, 0, 5);
+  //invariant (i) mass (m) of pion (p) minus (m) and kaon (k) plus (p) or pion (p) minus (m) and kaon (k) minus (k)
+  //i-m-p-p-k-p-p-m-k-m
   invppkppmkm->SetLineColor(kBlue);
   TH1F* decay = new TH1F("decay", "Invairant mass of particles from the decay", 1000, 0, 5);
 

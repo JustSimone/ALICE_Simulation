@@ -21,7 +21,7 @@
   \maketitle
   \section{Introduction}
 
-  ALICE\_Simulation is a computer program that simulates the ALICE experiment conducted at CERN since 1993, which consists of analyzing the collisions occurring between particles at very high energies$^{(1)}$. Those would create different particles following a probability distribution (Table\ref{table1}).
+  ALICE\_Simulation is a computer program that simulates the ALICE experiment that has been conducted at CERN since 1993, which consists of analyzing the collisions occurring between particles at very high energies$^{(1)}$. Those particles would create different particles following a probability distribution (Table\ref{table1}).
     \begin{table}[h!]
       \centering
       \begin{tabular}{ c c }
@@ -42,7 +42,7 @@
       }
     \end{table}\\
 
-    In the simulation, we generated a finite amount of particles resulting from the collision of the flux in the particle accelerator, each with a proper momentum, mass, and resulting energy to maintain the conservation of those properties.The goal of the experiment is to detect the existence of the Kaon 0 ($k^*$), a very rare particle that decays into either a Pion plus ($\pi^+$) and Kaon minus ($k^-$) or a Pion minus ($\pi^-$) and Kaon plus ($k^+$), after only $5.2 \times 10^{-8}s$. We so stored the data of momentum, energy, charge, and invariant mass of all the particles to detect the presence of differences that could indicate the existence of the Kaon.
+    In the simulation, we generated a finite amount of particles resulting from the collision of the flux in the particle accelerator, each with a proper momentum, mass, and resulting energy to maintain the conservation of those properties.The goal of the experiment is to detect the existence of the Kaon 0 ($k^*$), a very rare particle that decays into either a Positive Pion ($\pi^+$) and Negative Kaon ($k^-$) or a Negative Pion ($\pi^-$) and Positive Kaon ($k^+$), after only $5.2 \times 10^{-8}s$. We therefore stored the data of momentum, energy, charge, and invariant mass of all the particles to detect the presence of differences that could indicate the existence of the Kaon.
 
     The program we implemented stores the information about the particles and generates histograms from which we studied the system.
     \section{Code Structure}
@@ -94,9 +94,35 @@
     \end{figure}
     \begin{figure}
       \includegraphics[width=9cm]{c2.pdf}
-      \caption{\label{f1} \textit{The image shows the fit between the uniform distribution compared with the histogram of the angles randomly generated. The Chi-square divided by the number of degrees of freedom is very close to one, meanning that the histograms very well approximate an uniform distribution.}}
+      \caption{\label{f2} \textit{The image shows the fit between the uniform distribution compared with the histogram of the angles randomly generated. The Chi-square divided by the number of degrees of freedom is very close to one, meanning that the histograms very well approximate an uniform distribution.}}
     \end{figure}
     \\
+    It is possible to analyze these phenomena by looking at the histograms of the invariant mass. Because its definition contains both the momentum and the energy of the particles, we, therefore, assume it is conserved in the collision. Counting the number of particles per mass invariant value it is possible to construct the histogram of the invariant mass. The detection of the resonance Kaon consists of generating the histogram for only Pion and Kaon with different charges and comparing it with the histogram for the Pion and Kaon with the same charges. Because the resonance Kaon decays very quickly into those two particles with opposite charges, there should be a little "bump" in the first of those two histograms.
+    \begin{figure}[h!]
+      \centering
+      \includegraphics[width=9cm]{c4.pdf}
+      \caption{\label{f3} \textit{The figure shows the histograms of the invariant mass in red and blue, respectively, of positive Pions \& negative kaons or negative Pions \& positive Kaons and positive Pions \& positive Kaons or negative Pions \& negative Kaons.}}
+    \end{figure}\\
+    A second approach consists of comparing the two histograms of the invariant mass of all the particles with the same charge and opposite charges.
+    \\
+    \begin{figure}[h!]
+      \includegraphics[width=9cm]{c3.pdf}
+      \caption{\label{f4} \textit{The figure shows the two histograms of the invariant mass in red (thinnes) and blue (wider), respectively, of all the particles with same charges and all the particles with opposite charges.}}
+    \end{figure}\\
+    Subtracting the two pairs of histograms gives in both cases a bell shape, fitting a normal distribution with mean the mass of the resonance Kaon and sigma its error. Comparing the results with the testing histogram of the decay, filled during the simulation gives a very close value that stands inside the error.
+    \\
+    \begin{figure}[h!]
+      \includegraphics[width=9cm]{c6.pdf}
+      \caption{\label{f5} \textit{The image shows the result of the subtraction between the histogram of the invariant mass of all the particles with the same charges and opposite charges. The red line represents the fitting normal distribution and the box shows the stats.}}
+    \end{figure}
+    \\
+    \\
+    \begin{figure}[h!]
+      \includegraphics[width=9cm]{c5.pdf}
+      \caption{\label{f6} \textit{This image show the result of the subtraction between the histogram of invariant mass of positive Pions \& negative kaons or negative Pions \& positive Kaon and the histogram of positive Pions \& positive Kaon or negative Pions \& negative Kaons. The red line represent the fitting normal distribution and the box shows its statts.}}
+    \end{figure}
+    \\
+    In conclusion, the analysis of the first fit gives an experimental mass of $0.8838 \pm 0.0553$ Kg, while the second an experimental mass of $0.8884 \pm 0.0531$ Kg, both compatible with the supposed theoretical value of $0.89166$ Kg.
     \section* {Word Citacion}
     \begin{enumerate}
       \item{Alice Experiment. CERN. \url{https://home.cern/science/experiments/alice} . November $29^{th}$, 2021.}
