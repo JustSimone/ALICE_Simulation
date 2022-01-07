@@ -3,6 +3,7 @@
 \usepackage{pdfpages}
 \usepackage{graphicx}
 \usepackage{blindtext}
+\usepackage{caption}
 \usepackage{amsmath}
 \usepackage{listings}
 \usepackage{xcolor}
@@ -12,8 +13,8 @@
 \usepackage{hyperref}
 
 \geometry{
-  top=35mm,
-  bottom = 45mm
+  top=31mm,
+  bottom = 35mm
 }
 
 \definecolor{codegreen}{rgb}{0,0.6,0}
@@ -56,7 +57,7 @@
   \maketitle
   \section{Introduction}
 
-  ALICE\_Simulation is a computer program that simulates the ALICE experiment that has been conducted at CERN since 1993, which consists of analyzing the collisions occurring between particles at very high energies$^{(1)}$. Those particles would create different particles following a probability distribution (Table\ref{table1}).
+  ALICE\_Simulation is a computer program that simulates the ALICE experiment that has been conducted at CERN since 1993, which consists of analyzing the collisions occurring between particles at very high energies$^{(1)}$. Those particles would create different particles following a probability distribution (Table\ref{table1}).\\
     \begin{table}[h!]
       \centering
       \begin{tabular}{ c c }
@@ -65,32 +66,32 @@
         \hline
         $\pi^+$ & $40\%$ \\
         $\pi^-$ & $40\%$ \\
-        $k^+$ & $5\%$\\
-        $k^-$ & $5\%$\\
+        $k^+$ & $5.0\%$\\
+        $k^-$ & $5.0\%$\\
         $P^+$ & $4.5\%$\\
         $P^-$ & $4.5\%$\\
-        $k^*$ & $1\%$\\
+        $k^*$ & $1.0\%$\\
         \hline
       \end{tabular}
       \caption{ \label{table1}
       \textit{The table shows the probability of obtaining a specific particle from a collision of high energy particles}
       }
-    \end{table}\\
+    \end{table}
 
-    In the simulation, we generated a finite amount of particles resulting from the collision of the flux in the particle accelerator, each with a proper momentum, mass, and resulting energy to maintain the conservation of those properties.The goal of the experiment is to detect the existence of the Kaon 0 ($k^*$), a very rare particle that decays into either a Positive Pion ($\pi^+$) and Negative Kaon ($k^-$) or a Negative Pion ($\pi^-$) and Positive Kaon ($k^+$), after only $5.2 \times 10^{-8}s$. We therefore stored the data of momentum, energy, charge, and invariant mass of all the particles to detect the presence of differences that could indicate the existence of the Kaon.
+    In the simulation, we generated a finite amount of particles from the collision of the flux in the particle accelerator, each with a proper momentum, mass, and resulting energy, to maintain the conservation of those properties.The goal of the experiment is to detect the existence of Kaon 0 ($k^*$), a very rare particle that decays into either a Positive Pion ($\pi^+$) and Negative Kaon ($k^-$) or a Negative Pion ($\pi^-$) and Positive Kaon ($k^+$), after only $5.2 \times 10^{-8}s$. We stored the data of momentum, energy, charge, and invariant mass of all the particles to detect the presence of differences that could indicate the existence of the Kaon.
 
     The program we implemented stores the information about the particles and generates histograms from which we studied the system.
     \section{Code Structure}
       The code's division into different files and folders has the background idea of making it more orderly. There are eight files for the simulation program (one main file: \verb|mainE.cpp|, one libraries file: \verb|library.hpp|, three header files: \verb|ParticleType.hpp|, \verb|ResonanceType.hpp|, \verb|Particle.hpp|, and three source files: \verb|ParticleType.cpp|, \verb|Reso|- \verb|nanceType.cpp|, \verb|Particle.cpp|) and one for the data analysis (\verb|analysis.C|).
-      The header files contain the classes implemented for the proper functioning of the simulation. Meanwhile, the source files contain the implementation of the methods defined in the headers.
+      The header files contain the classes implemented for the proper functioning of the simulation, whereas the source files contain the implementation of the methods defined in the headers.
       \subsection*{ParticleType Class}
       The class \verb|ParticleType| creates a homonymous type that contains the name, the mass, and the charge of a particular particle, respectively as a \verb|std::string|, a \verb|double|, and an \verb|integer|. This class has five methods, two of which are virtual.
       \subsection* {ResonanceType Class}
-      The \verb|ResonanceType| class is a derived class from \verb|ParticleType| and, in addition to the base class items, it contains the information about the width of the particle as a double. The type defined with the name of this class creates a particle with a width. Contrarily to what happens for a \verb|ParticleType| object, in which the width of the particle is always zero. This class has two methods, both of them are the override of the already existing virtual methods in the base class.
+      The \verb|ResonanceType| class is a derived class from \verb|ParticleType| and, in addition to the base class items, contains the information about the width of the particle as a double. The type defined with the name of this class creates a particle with a width, contrary to what happens to a \verb|ParticleType| object, in which the width of the particle is always zero. This class has two methods, both of them are the override of the already existing virtual methods in the base class.
       \subsection* {Particle Class}
-      The class \verb|Particle| is the one that allows creating a particle giving it a random momentum and making it decay into other particles if necessary. It also creates a set of particles type, each with a proper index as an identifier. The variables in the class are three momentum components (\verb|fPx|, \verb|fPy|, \verb|fPz|), an array of ParticleType and its dimension (\verb|fParticleType|, \verb|fMaxNumParticleType|), an index of particle type (\verb|fNParticleType|), and a numeric code proper of each particle type \verb|fIndex|). This class has, also, several methods, including some static, which means they are accessible from the main without defining an object.
+      The class \verb|Particle| is the one that allows the creation of a particle giving it a random momentum and making it decay into other particles if necessary. It also creates a set of particle type, each with a proper index as an identifier. The variables in this class are three momentum components (\verb|fPx|, \verb|fPy|, \verb|fPz|), an array of ParticleType and its dimension (\verb|fParticleType|, \verb|fMaxNumParticleType|), an index of particle type (\verb|fNParticleType|), and a numeric code proper of each particle type (\verb|fIndex|). This class has, several methods, including some static, meanning they are accessible from the main without defining an object.
     \section{Generation}
-      In the simulation, there had been 10000 collision events, each using a set of 100 particles. The particles resulting from the collisions were Positive Pions ($\pi^+$), Negative Pions ($\pi^-$), Positive Kaons ($k^+$), Negative Kaons ($k^-$), Protons ($p^+$), Antiprotons ($p^-$), and Resonance Kaons ($k^*$), generated randomly using a uniform distribution and the probability shown in Table 1.  The module of the momentum of the particles comes from an exponential distribution with a mean of 1. While its direction drives from the cartesian components:
+      In the simulation, there had been 100000 collision events, each using a set of 100 particles. The particles resulting from the collisions were Positive Pions ($\pi^+$), Negative Pions ($\pi^-$), Positive Kaons ($k^+$), Negative Kaons ($k^-$), Protons ($p^+$), Antiprotons ($p^-$), and Resonance Kaons ($k^*$), generated randomly using a uniform distribution and the probability shown in Table 1.  The module of the momentum of the particles comes from an exponential distribution with a mean of 1. Its direction drives from the cartesian components:
       \begin{equation}
         \begin{cases}
           p_x = |p| \cdot \cos \theta \cdot \cos \phi\\
@@ -99,67 +100,85 @@
         \end{cases}
       \end{equation}\\
       Where the azimuthal angle theta ($\theta$) and the polar angle phi ($\phi$) are generated using a uniform random distribution respectively from 0 to $\pi$ and the second from 0 to $2\pi$.
-      In the case that a Resonance Kaon is created from the collision of particles, it deacis into eather a Positive Pion and a Negative Kaon or a Negative Pion and a Positive Kaon with the same probability. The momentum of this new two particles comes from a normal distribution.
+      In the case that a Resonance Kaon is created from the collision of particles, it deacys into eather a Positive Pion and a Negative Kaon or a Negative Pion and a Positive Kaon with the same probability. The momentum of these new two particles comes from a normal distribution.
     \section{Analysis}
-    The generation of particles types is compatible with the theoretical calculation as shown in Table. \ref{table2:Table 2}
+    The generation of particle types is compatible with the theoretical calculation as shown in Table. \ref{Table 2}
     \begin{table}[h!]
       \centering
       \begin{tabular}{ c c c c }
         \hline
         Particle Type & Entries & Error & Theo. Ent. \\
         \hline
-        $\pi^+$ & $3997740$ & $1999$ & $4\cdot10^6$\\
-        $\pi^-$ & $4002160$ & $2001$ & $4\cdot10^6$\\
-        $k^+$ & $500290$ & $707$ & $5\cdot10^5$\\
-        $k^-$ & $499781$ & $707$ & $5\cdot10^5$\\
-        $P^+$ & $449544$ & $671$ & $4.5\cdot10^5$\\
-        $P^-$ & $450121$ & $671$ & $4.5\cdot10^5$\\
-        $k^*$ & $100366$ & $317$ & $1\cdot10^5$\\
+        $\pi^+$ & $4000250$ & $2000$ & $4.0\cdot10^6$\\
+        $\pi^-$ & $3998440$ & $2000$ & $4.0\cdot10^6$\\
+        $k^+$ & $500727$ & $707$ & $5.0\cdot10^5$\\
+        $k^-$ & $499365$ & $707$ & $5.0\cdot10^5$\\
+        $P^+$ & $450417$ & $671$ & $4.5\cdot10^5$\\
+        $P^-$ & $450536$ & $671$ & $4.5\cdot10^5$\\
+        $k^*$ & $100264$ & $317$ & $1.0\cdot10^5$\\
         \hline
       \end{tabular}
-      \caption{ \label{table2:Table 2}
-      \textit{The table shows the entries got from the simulation with the respective error calculated using root, and the theoretical entries calculated taking the percentage of each particle type from the total amount of particles.}
+      \caption{ \label{Table 2}
+      \textit{The table shows the entries from the simulation with the respective error calculated using root, and the theoretical entries calculated taking the percentage of each particle type from the total amount of particles.}
       }
     \end{table}\\
-    As well as the angles and the momentum distributios are fitting the relative uniform and exponential distribution as shown in the images 1 and 2.
+    The angles and momentum distributions are fitting to the relative uniform and exponential distribution as shown in table 3.
+    \begin{table}[h!]
+      \centering
+      \begin{tabular}{ c | c c c c }
+        \hline
+        Distribution & Fit's Parameters & $\chi^2$ & D.O.F. & Reduced $\chi^2$ \\
+        \hline
+        Polar Angles (pol0) & $9999\pm3$ & $973.8$ & $999$ & $0.9748$\\
+        Azimutal Angols (pol0) & $9999\pm3$ & $902.8$ & $999$ & $0.9037$\\
+        Momentum (expo) & $(9939 \pm 3)\cdot10^{-4}$ & $959.2$ & $998$ & $0.9961$ \\
+        \hline
+      \end{tabular}
+      \caption{ \label{Table 3}
+      \textit{The table shows the results of the fits from the histograms of the angles and the momentum.}
+      }
+    \end{table}
     \begin{figure}[h!]
       \centering
-      \includegraphics[width=9cm]{c1.pdf}
-      \caption{\label{f1} \textit{The image shows the fit between the exponential distribution compared with the momentum histogram with occurrences randomly generated. The Chi-square divided by the number of degrees of freedom is very close to one, meaning that the histogram very well approximates an exponential distribution with a mean of 1.}}
-    \end{figure}
-    \begin{figure}
-      \includegraphics[width=9cm]{c2.pdf}
-      \caption{\label{f2} \textit{The image shows the fit between the uniform distribution compared with the histogram of the angles randomly generated. The Chi-square divided by the number of degrees of freedom is very close to one, meanning that the histograms very well approximate an uniform distribution.}}
+      \includegraphics[width=.8\linewidth]{can.pdf}
+      \caption{\label{f2} \textit{The image shows the fit between the uniform distribution compared with the histograms of the angles randomly generated and the histogram of the momentum with the exponential distribution.}}
     \end{figure}
     \\
-    It is possible to analyze these phenomena by looking at the histograms of the invariant mass. Because its definition contains both the momentum and the energy of the particles, we, therefore, assume it is conserved in the collision. Counting the number of particles per mass invariant value it is possible to construct the histogram of the invariant mass. The detection of the resonance Kaon consists of generating the histogram for only Pion and Kaon with different charges and comparing it with the histogram for the Pion and Kaon with the same charges. Because the resonance Kaon decays very quickly into those two particles with opposite charges, there should be a little "bump" in the first of those two histograms.
-    \begin{figure}[h!]
-      \centering
-      \includegraphics[width=9cm]{c4.pdf}
-      \caption{\label{f3} \textit{The figure shows the histograms of the invariant mass in red and blue, respectively, of positive Pions \& negative kaons or negative Pions \& positive Kaons and positive Pions \& positive Kaons or negative Pions \& negative Kaons.}}
-    \end{figure}\\
+    It is possible to analyze these phenomena by looking at the histograms of the invariant mass, because its definition contains both the momentum and the energy of the particles, it is, therefore, conserved in the collision. The construction of the invariant mass histogram consist of counting the number of particles per mass invariant value, and to detect the resonance Kaon. We considered the histogram only for Pion and Kaon with different charges and we compared it with the histogram of the Pion and Kaon with the same charges. Because the resonance Kaon decays very quickly into those two particles with opposite charges, there should be a little "bump" in the first of those two histograms.
     A second approach consists of comparing the two histograms of the invariant mass of all the particles with the same charge and opposite charges.
     \\
+    Subtracting the two pairs of histograms gives, in both cases, a bell shape, fitting a normal distribution with mean being the mass of the resonance Kaon and sigma its error, should appear in the canvas. Comparing the results with the testing histogram of the decay, filled during the simulation, fitting a normal distribution, gives a value that stands inside the error.\\
     \begin{figure}[h!]
-      \includegraphics[width=9cm]{c3.pdf}
-      \caption{\label{f4} \textit{The figure shows the two histograms of the invariant mass in red (thinnes) and blue (wider), respectively, of all the particles with same charges and all the particles with opposite charges.}}
-    \end{figure}\\
-    Subtracting the two pairs of histograms gives in both cases a bell shape, fitting a normal distribution with mean the mass of the resonance Kaon and sigma its error. Comparing the results with the testing histogram of the decay, filled during the simulation gives a very close value that stands inside the error.
-    \\
-    \begin{figure}[h!]
-      \includegraphics[width=9cm]{c6.pdf}
-      \caption{\label{f5} \textit{The image shows the result of the subtraction between the histogram of the invariant mass of all the particles with the same charges and opposite charges. The red line represents the fitting normal distribution and the box shows the stats.}}
+      \includegraphics[width=.8\linewidth]{cam.pdf}
+      \caption{\label{f3}\textit{The image shows the histograms of the invariant mass calculated in the three different ways all of them fitted suing a normal distribution.}}
     \end{figure}
-    \\
-    \\
-    \begin{figure}[h!]
-      \includegraphics[width=9cm]{c5.pdf}
-      \caption{\label{f6} \textit{This image show the result of the subtraction between the histogram of invariant mass of positive Pions \& negative kaons or negative Pions \& positive Kaon and the histogram of positive Pions \& positive Kaon or negative Pions \& negative Kaons. The red line represent the fitting normal distribution and the box shows its statts.}}
-    \end{figure}
-    \\
-    In conclusion, the analysis of the first fit gives an experimental mass of $0.8838 \pm 0.0553$ Kg, while the second an experimental mass of $0.8884 \pm 0.0531$ Kg, both compatible with the supposed theoretical value of $0.89166$ Kg.
+    In conclusion, from the previous considerations, we had been able to detect the presence of a resonance Kaon and the result of the simulated experiment has been summarized in table 4.
+    \begin{table}[h!]
+      \centering
+      \begin{tabular}{ c | c c c c }
+        \hline
+        Distribution & Mean & Sigma & Amplitude & $\chi^2$ \\
+        \hline
+        Inv. Mass. Decay & $0.8917\pm0.0002$ & $4004\pm15$ & $999$ & $1.086$\\
+        Inv. Mass. Charges & $0.8924\pm0.0052$ & $3805\pm378$ & $999$ & $1.021$\\
+        Inv. Mass. Kaon-Pion & $0.8918\pm0.0020$ & $3872\pm140$ & $998$ & $0.9433$ \\
+        \hline
+      \end{tabular}
+      \caption{ \label{Table 4}
+      \textit{The table summarize the result of the fit of all the histograms.}
+      }
+    \end{table}
 
-    \section{Code}
+    \section* {Word Citation}
+    \begin{enumerate}
+      \item{Alice Experiment. CERN. \url{https://home.cern/science/experiments/alice} . November $29^{th}$, 2021.}
+    \end{enumerate}
+    \newpage
+    \begin{center}
+      \Huge Appendix
+    \end{center}
+
+    \section*{Code}
       \subsection{ParticleType.hpp}
 
         \begin{lstlisting}[language=c++, style=code]
@@ -1045,11 +1064,4 @@
     ft4->SetOptStat(2211);
   }
       \end{lstlisting}
-
-    \section* {Word Citation}
-    \begin{enumerate}
-      \item{Alice Experiment. CERN. \url{https://home.cern/science/experiments/alice} . November $29^{th}$, 2021.}
-    \end{enumerate}
-
-
 \end{document}
