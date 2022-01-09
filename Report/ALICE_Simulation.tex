@@ -94,9 +94,9 @@
       In the simulation, there had been 100000 collision events, each using a set of 100 particles. The particles resulting from the collisions were Positive Pions ($\pi^+$), Negative Pions ($\pi^-$), Positive Kaons ($k^+$), Negative Kaons ($k^-$), Protons ($p^+$), Antiprotons ($p^-$), and Resonance Kaons ($k^*$), generated randomly using a uniform distribution and the probability shown in Table 1.  The module of the momentum of the particles comes from an exponential distribution with a mean of 1. Its direction drives from the cartesian components:
       \begin{equation}
         \begin{cases}
-          p_x = |p| \cdot \cos \theta \cdot \cos \phi\\
-          p_y = |p| \cdot \cos \theta \cdot \sin \phi\\
-          p_z = |p| \cdot \sin \theta
+          p_x = |\vec{p} \mbox{ } | \cdot \cos \theta \cdot \cos \phi\\
+          p_y = |\vec{p} \mbox{ } | \cdot \cos \theta \cdot \sin \phi\\
+          p_z = |\vec{p} \mbox{ } | \cdot \sin \theta
         \end{cases}
       \end{equation}\\
       Where the azimuthal angle theta ($\theta$) and the polar angle phi ($\phi$) are generated using a uniform random distribution respectively from 0 to $\pi$ and the second from 0 to $2\pi$.
