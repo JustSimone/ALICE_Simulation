@@ -21,8 +21,8 @@
 \posttitle{\end{center}}
 
 \geometry{
-  top=31mm,
-  bottom = 35mm
+  top=25mm,
+  bottom = 32mm
 }
 
 \definecolor{codegreen}{rgb}{0,0.6,0}
@@ -61,7 +61,7 @@
 \begin{document}
   \title{Computer Simulation of ALICE Project for the Detection of the Resonance Kaon}
   \author{Coli Simone}
-  \date{November 24th, 2021 \\\rule[1px]{400px}{1px} \rule[0.5cm]{400px}{3px}}
+  \date{November 24th, 2021 \rule[1px]{400px}{1px} \rule[0.5cm]{400px}{3px}}
   \maketitle
   \section{Abstract}
   ALICE\_Simulation is a computer program that simulates the ALICE experiment that has been conducted at CERN since 1993, which consists of analyzing the collisions occurring between particles at very high energies$^{(1)}$. Those particles would create different particles following a probability distribution (Table\ref{table1}).\\
@@ -977,53 +977,6 @@
     ft5->SetOptFit(optarg);
     c2->Print("../fit/anglesfit.pdf");
 
-    // Check the entrance for each histogram
-
-    TH1F* tmom = (TH1F*)c->Get("tmomentum");
-    TH1F* imass = (TH1F*)c->Get("invmass");
-    TH1F* en = (TH1F*)c->Get("energy");
-    TH1F* imd = (TH1F*)c->Get("invmassdis");
-    TH1F* imc = (TH1F*)c->Get("invmasscon");
-    TH1F* inv1 = (TH1F*)c->Get("invppkmpmkp");
-    TH1F* inv2 = (TH1F*)c->Get("invppkppmkm");
-    TH1F* dec = (TH1F*)c->Get("decay");
-
-    cout<<"---------------------------------------\n";
-    cout<<"Entries Momentum: "<< Mom->GetEntries()<<" - "<< 1E7<<'\n';
-
-    cout<<"---------------------------------------\n";
-    cout<<"Entries tMoment: "<< tmom->GetEntries()<<" - "<<1E7<<'\n';
-
-    cout<<"---------------------------------------\n";
-    cout<<"Entries invariant mass: "<< imass->GetEntries()<<" - "<<1E5*101*100/2<<'\n';
-
-    cout<<"---------------------------------------\n";
-    cout<<"Entries energy: "<< en->GetEntries()<<"- "<<1E7<<'\n';
-
-    cout<<"---------------------------------------\n";
-    cout<<"Entries invariant mass opposite: "<< imd->GetEntries()<<" - "<<1E5*101*100*0.495/2<<'\n';
-
-    cout<<"---------------------------------------\n";
-    cout<<"Entries invariant mass concord: "<< imc->GetEntries()<<" - "<<1E5*101*100*0.495/2<<'\n';
-
-    cout<<"---------------------------------------\n";
-    cout<<"Entries invariant mass 1: "<< inv1->GetEntries()<<" - "<<1E5*101*100<<'\n';
-
-    cout<<"---------------------------------------\n";
-    cout<<"Entries invariant mass 2: "<< inv2->GetEntries()<<" - "<<1E5*101*100<<'\n';
-
-    cout<<"---------------------------------------\n";
-    cout<<"Entries decay: "<< dec->GetEntries()<<" - "<<1E7*0.01<<'\n';
-
-    cout<<"---------------------------------------\n";
-    cout<<"Entries azimutal angles: "<< azim->GetEntries()<<" - "<<1E7<<'\n';
-
-    cout<<"---------------------------------------\n";
-    cout<<"Entries polar angles: "<< Pol->GetEntries()<<" - " << 1E7<<'\n';
-    cout<<"---------------------------------------\n";
-
-
-  }
 
   // Function that analyze the function for the detection of the Resonance Kaon //////////
 
